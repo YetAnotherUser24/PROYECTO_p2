@@ -104,9 +104,14 @@ Seleccione el n° de serie del departamento que desea comprar
     
     elif choice_value == 4:
         PrintingModule.guardar(departamentos,departamentos_vendidos)
+        time.sleep(2)
+        clear()
+        continue
     elif choice_value == 5:
         PrintingModule.leer(departamentos,departamentos_vendidos)
-
-    elif choice_value == 0:     
+        time.sleep(2)
+        clear()
+        continue
+    elif choice_value == 6:     
         break
     #Termina el programa

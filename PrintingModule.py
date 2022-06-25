@@ -8,10 +8,9 @@ def menu():
     3. Departamentos Vendidos
     4. Guardar en archivo
     5. Leer
-
-    0. Terminar el programa
+    6. Terminar el programa
     """)
-    return([1,2,3,4,5,0])
+    return([1,2,3,4,5,6])
 #Esta función imprime el menú principal en la consola
 #devuelve una lista de opciones válidas del menú
 
@@ -170,6 +169,7 @@ def menu_venta(departamentos_vendidos):
 def guardar(departamentos,departamentos_vendidos):
     fileR = open("archivo_registrados.txt","w")
     fileV = open("archivo_vendidos.txt","w")
+    print("Guardando datos en el archivo: archivo_registrados.txt y archivo_vendidos.txt")
     for listas in departamentos:
         for e in listas:
             fileR.write(str(e)+",")
@@ -180,19 +180,20 @@ def guardar(departamentos,departamentos_vendidos):
             fileV.write(str(e)+",")
         fileV.write("\n")
     fileV.close()
+    print("GUARDADO TERMINADO")
 
 def leer(departamentos,departamentos_vendidos):
     n=open("archivo_registrados.txt","r")
     lineas1 = n.readlines()
-    print(lineas1)
     m=open("archivo_vendidos.txt","r")
     lineas2 = m.readlines()
-    print(lineas2)
+    print("Leyendo los datos de los departamentos desde el archivo: archivo_registrados.txt")
     for i in range(len(lineas1)):
         depa = lineas1[i].split(",")[:-1]
         if depa not in departamentos:
             departamentos.append(depa)
     n.close()
+    print("Leyendo los datos de los departamentos desde el archivo: archivo_vendidos.txt")
     for i in range(len(lineas2)):
         depa = lineas2[i].split(",")[:-1]
         if depa not in departamentos_vendidos:
