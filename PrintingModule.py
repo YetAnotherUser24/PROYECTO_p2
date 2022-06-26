@@ -197,6 +197,25 @@ def leer(departamentos,departamentos_vendidos):
       departamentos_vendidos.append(depa)
   m.close()
 
+def busqueda_filtrar_distrito(n,departamentos):
+  departamentos_distrito=[]
+  for i in range(len(departamentos)):
+    if departamentos[i][1] == n :
+      departamentos_distrito.append(departamentos[i])
+  return departamentos_distrito
+def busqueda_filtrar_habitaciones(n,departamentos):
+  departamentos_habitaciones=[]
+  for i in range(len(departamentos)):
+    if departamentos[i][3] == n :
+      departamentos_habitaciones.append(departamentos[i])
+  return departamentos_habitaciones
+def busqueda_filtrar_preciomax(n,departamentos):
+  departamentos_preciomax=[]
+  for i in range(len(departamentos)):
+    if departamentos[i][5] <= n :
+      departamentos_preciomax.append(departamentos[i])
+  return departamentos_preciomax
+
 
 
 
