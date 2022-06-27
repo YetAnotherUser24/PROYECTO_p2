@@ -26,7 +26,7 @@ def busqueda_filtrar_preciomax(n,departamentos):
   if len(departamentos_preciomax) != 0:
     return departamentos_preciomax
   else:
-    return "No hay departamentos con un precio menor a S/.",n
+    return "No hay departamentos con un precio menor a S/."+n
   
 def busqueda_filtrar_piso(n,departamentos):
   departamentos_piso=[]

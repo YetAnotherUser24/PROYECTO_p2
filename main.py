@@ -4,7 +4,7 @@ import PrintingModule       #Módulo creado para imprimir menús
 import SearchandSortingModule
 import datetime
 def clear():        
-    os.system("clear")
+    os.system("cls")
 #Esta función limpia la consola mediante la libreria os
 
 def choice(opcion=-1):      #Esta función valida la entrada del usuario, se usa un -1 como defecto para entrar al bucle
@@ -69,57 +69,69 @@ while True:     #Permite correr al programa todo el tiempo hasta que el usuario 
     #Activa el menú de registro
 
     elif choice_value == 2:
-        opciones_validas = PrintingModule.menu_disponibilidad(departamentos)
-        choice_value = choice_sin_limpieza()
-        if choice_value == 0:
-            clear()
-            continue
-        elif choice_value == 1:
-            opciones_validas = [x for x in range(0, len(departamentos)+1)]
-            print("""
+        d = departamentos
+        while True:
+            if isinstance(d,str):
+                print(d)
+                print("0. Regresar al menú principal")
+                opciones_validas = [0]
+                choice_value = choice()
+                if choice_value == 0:
+                    clear()
+                    break
+            else:
+                opciones_validas = PrintingModule.menu_disponibilidad(d)
+                choice_value = choice_sin_limpieza()
+                if choice_value == 0:
+                    clear()
+                    break
+                elif choice_value == 1:
+                    opciones_validas = [x for x in range(0, len(departamentos)+1)]
+                    print("""
 Seleccione el n° de serie del departamento que desea comprar
 0. Regresar al menú principal""")
-            print("")
-            choice_value = choice()
-            if choice_value == 0:       #Devuelve al menú principal
-                continue
-            elif choice_value == 1:       #Activa el menú de compra
-                while True:
-                    opciones_validas = PrintingModule.menu_compra(departamentos, choice_value)
-                    choice_value_sin_limpieza = choice_sin_limpieza()
-                    confirmacion_value = confirmacion()
-                    if confirmacion_value == "n":
-                        break
+                    print("")
+                    choice_value = choice()
+                    if choice_value == 0:       #Devuelve al menú principal
+                        continue
+                    elif choice_value == 1:       #Activa el menú de compra
+                        while True:
+                            opciones_validas = PrintingModule.menu_compra(departamentos, choice_value)
+                            choice_value_sin_limpieza = choice_sin_limpieza()
+                            confirmacion_value = confirmacion()
+                            if confirmacion_value == "n":
+                                break
 
-                    elif confirmacion_value == "y":
-                        opciones_validas = PrintingModule.menu_salida(departamentos, departamentos_vendidos, choice_value)
-                        choice()
+                            elif confirmacion_value == "y":
+                                opciones_validas = PrintingModule.menu_salida(departamentos, departamentos_vendidos, choice_value)
+                                choice()
+                                break
                         break
-        elif choice_value == 2:
-            n = input("input: ")
-            print(SearchandSortingModule.busqueda_filtrar_distrito(n,departamentos))
-            time.sleep(2)
-            continue
-        elif choice_value == 3:
-            n = input("input: ")
-            print(SearchandSortingModule.busqueda_filtrar_habitaciones(n,departamentos))
-            time.sleep(2)
-            continue
-        elif choice_value == 4:
-            n = input("input: ")
-            print(SearchandSortingModule.busqueda_filtrar_piso(n,departamentos))
-            time.sleep(2)
-            continue
-        elif choice_value == 5:
-            n = input("input: ")
-            print(SearchandSortingModule.busqueda_filtrar_preciomax(n,departamentos))
-            time.sleep(2)
-            continue
-        elif choice_value == 6:
-            n = input("input: ")
-            print(SearchandSortingModule.busqueda_filtrar_area(n,departamentos))
-            time.sleep(2)
-            continue
+                elif choice_value == 2:
+                    n = input("Distrito: ")
+                    d = SearchandSortingModule.busqueda_filtrar_distrito(n,d)
+                    clear()
+                    continue
+                elif choice_value == 3:
+                    n = input("n° de habitaciones: ")
+                    d = SearchandSortingModule.busqueda_filtrar_habitaciones(n,d)
+                    clear()
+                    continue
+                elif choice_value == 4:
+                    n = input("Número de pisos máximo: ")
+                    d = SearchandSortingModule.busqueda_filtrar_piso(n,d)
+                    clear()
+                    continue
+                elif choice_value == 5:
+                    n = input("Precio máximo: ")
+                    d = SearchandSortingModule.busqueda_filtrar_preciomax(n,d)
+                    clear()
+                    continue
+                elif choice_value == 6:
+                    n = input("Área mínima: ")
+                    d = SearchandSortingModule.busqueda_filtrar_area(n,d)
+                    clear()
+                    continue
     #Activa el menú de departamentos disponibles          
 
     elif choice_value == 3:

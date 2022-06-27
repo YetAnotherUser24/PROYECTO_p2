@@ -75,7 +75,7 @@ def menu_registro():
             print("ERROR - el precio debe ser un numero positivo")
             precio = input("Precio S/: ")
     
-    return([direccion,distrito,piso,nhabitaciones,area,precio,(datetime.datetime.now()).strftime('%d/%m/%Y %H:%M')])
+    return([direccion,distrito,int(piso),int(nhabitaciones),float(area),float(precio),(datetime.datetime.now()).strftime('%d/%m/%Y %H:%M')])
 #Esta función imprime el menú de registro en la consola
 #pide los datos da un departamentos 
 #pide confirmación de los datos ingresados
@@ -91,18 +91,18 @@ def menu_registro_confirmado(departamentos,datos):
 #Esta función agrega un nuevo departamento a la matriz departamentos con los datos antes ingresados
 #devuelve una lista con las opciones validas
 
-def menu_disponibilidad(departamentos):
+def menu_disponibilidad(d):
     print("{:<4} {:<20} {:<6} {:<10} {:<15} {:<15} {:<10}".format("n°","Distrito","Piso","n° hab","Área","Precio","Hora de registro"))
-    for i in range(len(departamentos)):
-      print("{:<4} {:<20} {:<6} {:<10} {:<15} {:<15} {:<10}".format(str(i+1),departamentos[i][1],departamentos[i][2],departamentos[i][3],str(departamentos[i][4])+" m2","S/. "+str(departamentos[i][5]),departamentos[i][6]))
+    for i in range(len(d)):
+        print("{:<4} {:<20} {:<6} {:<10} {:<15} {:<15} {:<10}".format(i+1,d[i][1],d[i][2],d[i][3],str(d[i][4])+" m2","S/. "+str(d[i][5]),d[i][6]))
 
     print("""
 0. Regresar al menú principal
 1. Comprar departamento
 2. Filtrar por distrito
 3. Filtrar por numero de habitaciones
-4. Filtrar por precio maximo
-5. Filtrar por piso maximo
+4. Filtrar por piso máximo
+5. Filtrar por precio máximo
 6. Filtrar por area minima
 """)
     return([0,1,2,3,4,5,6])
