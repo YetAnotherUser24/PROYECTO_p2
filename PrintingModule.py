@@ -1,4 +1,5 @@
 import time
+import datetime
 def menu():
     print("""
         INMOBILIARIA
@@ -73,7 +74,8 @@ def menu_registro():
         except ValueError:
             print("ERROR - el precio debe ser un numero positivo")
             precio = input("Precio S/: ")
-    return([direccion,distrito,piso,nhabitaciones,area,precio,time.ctime()])
+    
+    return([direccion,distrito,piso,nhabitaciones,area,precio,(datetime.datetime.now()).strftime('%d/%m/%Y %H:%M')])
 #Esta función imprime el menú de registro en la consola
 #pide los datos da un departamentos 
 #pide confirmación de los datos ingresados
@@ -90,21 +92,26 @@ def menu_registro_confirmado(departamentos,datos):
 #devuelve una lista con las opciones validas
 
 def menu_disponibilidad(departamentos):
-    print("{:<4} {:<35} {:<20} {:<6} {:<10} {:<15} {:<15} {:<10}".format("n°","Dirección","Distrito","Piso","n° hab","Área","Precio","Hora de registro"))
+    print("{:<4} {:<20} {:<6} {:<10} {:<15} {:<15} {:<10}".format("n°","Distrito","Piso","n° hab","Área","Precio","Hora de registro"))
     for i in range(len(departamentos)):
-        departamentos[i][6] = "".join((departamentos[i][6]))
-        print("{:<4} {:<35} {:<20} {:<6} {:<10} {:<15} {:<15} {:<10}".format(str(i+1),departamentos[i][0],departamentos[i][1],departamentos[i][2],departamentos[i][3],str(departamentos[i][4])+" m2","S/. "+str(departamentos[i][5]),departamentos[i][6]))
+      print("{:<4} {:<20} {:<6} {:<10} {:<15} {:<15} {:<10}".format(str(i+1),departamentos[i][1],departamentos[i][2],departamentos[i][3],str(departamentos[i][4])+" m2","S/. "+str(departamentos[i][5]),departamentos[i][6]))
 
     print("""
 0. Regresar al menú principal
-1. Comprar departamento""")
-    return([0,1])
+1. Comprar departamento
+2. Filtrar por distrito
+3. Filtrar por numero de habitaciones
+4. Filtrar por precio maximo
+5. Filtrar por piso maximo
+6. Filtrar por area minima
+""")
+    return([0,1,2,3,4,5,6])
 #Esta función imprime los departamentos disponibles organizados según su número de serie
 #devuelve una lista con las opciones validas
 
 def menu_compra(departamentos, choice_value):
-    print("{:<4} {:<35} {:<20} {:<6} {:<10} {:<15} {:<15} {:<10}".format("n°","Dirección","Distrito","Piso","n° hab","Área","Precio","Hora de registro"))
-    print("{:<4} {:<35} {:<20} {:<6} {:<10} {:<15} {:<15} {:<10}".format(str(choice_value),departamentos[choice_value-1][0],departamentos[choice_value-1][1],departamentos[choice_value-1][2],departamentos[choice_value-1][3],str(departamentos[choice_value-1][4])+" m2","S/. "+str(departamentos[choice_value-1][5]),departamentos[choice_value-1][6]))
+    print("{:<4} {:<20} {:<6} {:<10} {:<15} {:<15} {:<10}".format("n°","Distrito","Piso","n° hab","Área","Precio","Hora de registro"))
+    print("{:<4} {:<20} {:<6} {:<10} {:<15} {:<15} {:<10}".format(str(choice_value),departamentos[choice_value-1][1],departamentos[choice_value-1][2],departamentos[choice_value-1][3],str(departamentos[choice_value-1][4])+" m2","S/. "+str(departamentos[choice_value-1][5]),departamentos[choice_value-1][6]))
     nombre = input("Nombre: ")
     DNI = input("DNI: ")
     while True:
@@ -140,7 +147,7 @@ def menu_compra(departamentos, choice_value):
 
 def menu_salida(departamentos,departamentos_vendidos,choice_value):
     departamentos_vendidos.append(departamentos[choice_value-1][:-1])
-    departamentos_vendidos[len(departamentos_vendidos)-1].append(time.ctime())
+    departamentos_vendidos[len(departamentos_vendidos)-1].append((datetime.datetime.now()).strftime('%d/%m/%Y %H:%M'))
     del departamentos[choice_value - 1]
     print("""
 ---------------COMPRA REALIZADA CON ÉXITO---------------
@@ -151,17 +158,18 @@ def menu_salida(departamentos,departamentos_vendidos,choice_value):
 #devuelve una lista de opciones válidas del menú
 
 def menu_venta(departamentos_vendidos):
-    print("{:<4} {:<35} {:<20} {:<6} {:<10} {:<15} {:<15} {:<10}".format("n°","Dirección","Distrito","Piso","n° hab","Área","Precio","Hora de registro"))
+    print("{:<4} {:<20} {:<6} {:<10} {:<15} {:<15} {:<10}".format("n°","Distrito","Piso","n° hab","Área","Precio","Hora de registro"))
     for i in range(len(departamentos_vendidos)):
-        departamentos_vendidos[i][6] = "".join((departamentos_vendidos[i][6]))
-        print("{:<4} {:<35} {:<20} {:<6} {:<10} {:<15} {:<15} {:<10}".format(str(i+1),departamentos_vendidos[i][0],departamentos_vendidos[i][1],departamentos_vendidos[i][2],departamentos_vendidos[i][3],str(departamentos_vendidos[i][4])+" m2","S/. "+str(departamentos_vendidos[i][5]),departamentos_vendidos[i][6]))
+      print("{:<4} {:<20} {:<6} {:<10} {:<15} {:<15} {:<10}".format(str(i+1),departamentos_vendidos[i][1],departamentos_vendidos[i][2],departamentos_vendidos[i][3],str(departamentos_vendidos[i][4])+" m2","S/. "+str(departamentos_vendidos[i][5]),departamentos_vendidos[i][6]))
     #print(departamentos_vendidos)
     #for i in range(len(departamentos_vendidos)):
     #    print(i+1, departamentos_vendidos[i])
     print("Total: S/. ", sum([float(departamentos_vendidos[i][5]) for i in range(len(departamentos_vendidos))]))
     print("")
     print("0. Regresar al menú principal")
-    return[0]
+    print("1. Ordenar por distritos")
+    print("2. Ordenar por fecha")
+    return[0,1,2]
 #Esta función imprime los departamentos vendidos ordenados por número de serie
 #devuelve una lista de opciones válidas del menú
 
@@ -182,10 +190,10 @@ def guardar(departamentos,departamentos_vendidos):
 def leer(departamentos,departamentos_vendidos):
   n=open("archivo_registrados.txt","r")
   lineas1 = n.readlines()
-  print(lineas1)
+
   m=open("archivo_vendidos.txt","r")
   lineas2 = m.readlines()
-  print(lineas2)
+
   for i in range(len(lineas1)):
     depa = lineas1[i].split(",")[:-1]
     if depa not in departamentos:
@@ -193,30 +201,9 @@ def leer(departamentos,departamentos_vendidos):
   n.close()
   for i in range(len(lineas2)):
     depa = lineas2[i].split(",")[:-1]
-    if depa not in departamentos_vendidos:
+    if depa not in departamentos:
       departamentos_vendidos.append(depa)
   m.close()
-
-def busqueda_filtrar_distrito(n,departamentos):
-  departamentos_distrito=[]
-  for i in range(len(departamentos)):
-    if departamentos[i][1] == n :
-      departamentos_distrito.append(departamentos[i])
-  return departamentos_distrito
-  
-def busqueda_filtrar_habitaciones(n,departamentos):
-  departamentos_habitaciones=[]
-  for i in range(len(departamentos)):
-    if departamentos[i][3] == n :
-      departamentos_habitaciones.append(departamentos[i])
-  return departamentos_habitaciones
-  
-def busqueda_filtrar_preciomax(n,departamentos):
-  departamentos_preciomax=[]
-  for i in range(len(departamentos)):
-    if departamentos[i][5] <= n :
-      departamentos_preciomax.append(departamentos[i])
-  return departamentos_preciomax
 
 
 

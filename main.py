@@ -1,7 +1,8 @@
 import os
 import time
 import PrintingModule       #Módulo creado para imprimir menús
-
+import SearchandSortingModule
+import datetime
 def clear():        
     os.system("clear")
 #Esta función limpia la consola mediante la libreria os
@@ -33,16 +34,16 @@ def choice_sin_limpieza(opcion=-1):
 def confirmacion(respuesta="1"):        #Esta función pregunta al usuario si esta seguro de sus entradas
     respuesta = input("""
 ¿Desea confirmar el registro?
-Escriba 'Y' para sí y 'N' para no
-""")
-    while respuesta != "Y" and respuesta != "N": 
+Escriba 'y' para sí y 'n' para no
+""").lower()
+    while respuesta != "y" and respuesta != "n": 
         respuesta = input("""
 ERROR - vuelva a intentarlo
-Escriba 'Y' para confirmar y 'N' para cancelar
+Escriba 'y' para confirmar y 'n' para cancelar
 """)
-    if respuesta == "Y":        #Si coloca Y, el programa sigue normalmente
+    if respuesta == "y":        #Si coloca y, el programa sigue normalmente
         print("")
-    elif respuesta == "N":      #Si coloca N, se cancela la operación y se regresa al menú principal
+    elif respuesta == "n":      #Si coloca n, se cancela la operación y se regresa al menú principal
         print("REGRESANDO AL MENU...")
         time.sleep(2)
         clear()
@@ -59,9 +60,9 @@ while True:     #Permite correr al programa todo el tiempo hasta que el usuario 
         while True:
             datos = PrintingModule.menu_registro()
             confirmacion_value = confirmacion()
-            if confirmacion_value == "N":
+            if confirmacion_value == "n":
                 break
-            elif confirmacion_value == "Y":
+            elif confirmacion_value == "y":
                 opciones_validas = PrintingModule.menu_registro_confirmado(departamentos,datos)
                 choice()
                 break
@@ -82,33 +83,75 @@ Seleccione el n° de serie del departamento que desea comprar
             choice_value = choice()
             if choice_value == 0:       #Devuelve al menú principal
                 continue
-            else:       #Activa el menú de compra
+            elif choice_value == 1:       #Activa el menú de compra
                 while True:
                     opciones_validas = PrintingModule.menu_compra(departamentos, choice_value)
                     choice_value_sin_limpieza = choice_sin_limpieza()
                     confirmacion_value = confirmacion()
-                    if confirmacion_value == "N":
+                    if confirmacion_value == "n":
                         break
 
-                    elif confirmacion_value == "Y":
+                    elif confirmacion_value == "y":
                         opciones_validas = PrintingModule.menu_salida(departamentos, departamentos_vendidos, choice_value)
                         choice()
                         break
+        elif choice_value == 2:
+            n = input("input: ")
+            print(SearchandSortingModule.busqueda_filtrar_distrito(n,departamentos))
+            time.sleep(2)
+            continue
+        elif choice_value == 3:
+            n = input("input: ")
+            print(SearchandSortingModule.busqueda_filtrar_habitaciones(n,departamentos))
+            time.sleep(2)
+            continue
+        elif choice_value == 4:
+            n = input("input: ")
+            print(SearchandSortingModule.busqueda_filtrar_piso(n,departamentos))
+            time.sleep(2)
+            continue
+        elif choice_value == 5:
+            n = input("input: ")
+            print(SearchandSortingModule.busqueda_filtrar_preciomax(n,departamentos))
+            time.sleep(2)
+            continue
+        elif choice_value == 6:
+            n = input("input: ")
+            print(SearchandSortingModule.busqueda_filtrar_area(n,departamentos))
+            time.sleep(2)
+            continue
     #Activa el menú de departamentos disponibles          
 
     elif choice_value == 3:
-        opciones_validas = PrintingModule.menu_venta(departamentos_vendidos)
-        choice()
-        continue
-    #Activa el menú de ventas
-
+        while True:
+          opciones_validas = PrintingModule.menu_venta(departamentos_vendidos)
+          choice_value = choice()
+          if choice_value == 0:
+            break
+          elif choice_value == 1:
+            SearchandSortingModule.ordenamiento_distrito(departamentos_vendidos)
+            continue
+          elif choice_value == 2:
+            SearchandSortingModule.ordenamiento_fecha(departamentos_vendidos)
+            continue
     elif choice_value == 4:
-        PrintingModule.guardar(departamentos,departamentos_vendidos)
-        print("""Guardando datos de los departamentos en archivo_registrados y archivo_vendidos
-              
-              GUARDADO TERMINADO""")
+        c = confirmacion()
+        if c == "y":    
+          PrintingModule.guardar(departamentos,departamentos_vendidos)
+          time.sleep(1)
+          clear()
+          continue
+        elif c == "n":
+          continue
     elif choice_value == 5:
-      PrintingModule.leer(departamentos,departamentos_vendidos)
+        c = confirmacion()
+        if c == "y":
+          PrintingModule.leer(departamentos,departamentos_vendidos)
+          time.sleep(1)
+          clear()
+          continue
+        elif c == "n":
+          continue
     elif choice_value == 0:     
         break
     #Termina el programa
