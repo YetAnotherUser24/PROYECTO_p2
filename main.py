@@ -138,7 +138,7 @@ Seleccione el n° de serie del departamento que desea comprar
         c = confirmacion()
         if c == "y":    
             PrintingModule.guardar(departamentos,departamentos_vendidos)
-            time.sleep(1)
+            time.sleep(1.2)
             clear()
             continue
         elif c == "n":
@@ -147,7 +147,7 @@ Seleccione el n° de serie del departamento que desea comprar
         c = confirmacion()
         if c == "y":
             PrintingModule.leer(departamentos,departamentos_vendidos)
-            time.sleep(1)
+            time.sleep(1.2)
             clear()
             continue
         elif c == "n":
