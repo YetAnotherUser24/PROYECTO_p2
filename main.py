@@ -124,34 +124,34 @@ Seleccione el n° de serie del departamento que desea comprar
 
     elif choice_value == 3:
         while True:
-          opciones_validas = PrintingModule.menu_venta(departamentos_vendidos)
-          choice_value = choice()
-          if choice_value == 0:
-            break
-          elif choice_value == 1:
-            SearchandSortingModule.ordenamiento_distrito(departamentos_vendidos)
-            continue
-          elif choice_value == 2:
-            SearchandSortingModule.ordenamiento_fecha(departamentos_vendidos)
-            continue
+            opciones_validas = PrintingModule.menu_venta(departamentos_vendidos)
+            choice_value = choice()
+            if choice_value == 0:
+                break
+            elif choice_value == 1:
+                SearchandSortingModule.ordenamiento_distrito(departamentos_vendidos)
+                continue
+            elif choice_value == 2:
+                SearchandSortingModule.ordenamiento_fecha(departamentos_vendidos)
+                continue
     elif choice_value == 4:
         c = confirmacion()
         if c == "y":    
-          PrintingModule.guardar(departamentos,departamentos_vendidos)
-          time.sleep(1)
-          clear()
-          continue
+            PrintingModule.guardar(departamentos,departamentos_vendidos)
+            time.sleep(1)
+            clear()
+            continue
         elif c == "n":
-          continue
+            continue
     elif choice_value == 5:
         c = confirmacion()
         if c == "y":
-          PrintingModule.leer(departamentos,departamentos_vendidos)
-          time.sleep(1)
-          clear()
-          continue
+            PrintingModule.leer(departamentos,departamentos_vendidos)
+            time.sleep(1)
+            clear()
+            continue
         elif c == "n":
-          continue
+            continue
     elif choice_value == 0:     
         break
     #Termina el programa
