@@ -8,9 +8,9 @@ def menu():
     3. Departamentos Vendidos
     4. Guardar en archivo
     5. Leer archivo
-    0. Terminar el programa
+    6. Terminar el programa
     """)
-    return([1,2,3,4,5,0])
+    return([1,2,3,4,5,6])
 #Esta función imprime el menú principal en la consola
 #devuelve una lista de opciones válidas del menú
 
@@ -110,6 +110,7 @@ def menu_disponibilidad(d):
 #devuelve una lista con las opciones validas
 
 def menu_compra(departamentos, choice_value):
+    
     print("{:<4} {:<20} {:<6} {:<10} {:<15} {:<15} {:<10}".format("n°","Distrito","Piso","n° hab","Área","Precio","Hora de registro"))
     print("{:<4} {:<20} {:<6} {:<10} {:<15} {:<15} {:<10}".format(str(choice_value),departamentos[choice_value-1][1],departamentos[choice_value-1][2],departamentos[choice_value-1][3],str(departamentos[choice_value-1][4])+" m2","S/. "+str(departamentos[choice_value-1][5]),departamentos[choice_value-1][6]))
     nombre = input("Nombre: ")
@@ -169,39 +170,56 @@ def menu_venta(departamentos_vendidos):
     print("0. Regresar al menú principal")
     print("1. Ordenar por distritos")
     print("2. Ordenar por fecha")
-    return[0,1,2]
+    print("3. Ordenar por precio")
+    print("4. Ordenar por área")
+    return[0,1,2,3,4]
 #Esta función imprime los departamentos vendidos ordenados por número de serie
 #devuelve una lista de opciones válidas del menú
 
-def guardar(departamentos,departamentos_vendidos):
-  fileR = open("archivo_registrados.txt","w")
-  fileV = open("archivo_vendidos.txt","w")
-  for listas in departamentos:
-    for e in listas:
-      fileR.write(str(e)+",")
-    fileR.write("\n")
-  fileR.close()
-  for listas in departamentos_vendidos:
-    for e in listas:
-      fileV.write(str(e)+",")
-    fileV.write("\n")
-  fileV.close()
+def guardar(departamentos,departamentos_vendidos): #Guarda en los archivos
+  fileR = open("archivo_registrados.txt","w") #Abre el archivo como escritura
+  fileV = open("archivo_vendidos.txt","w") #Abre el archivo como escritura
+  for listas in departamentos: #recorre la matriz departamentos
+    for e in listas: #ingresa a cada elemento de n lista
+      fileR.write(str(e)+",") #escribe en el archivo como str y agrega una , 
+    fileR.write("\n") #al terminar de escribir una lista en una linea, salta a la siguiente
+  fileR.close() #cierra el archivo
+  for listas in departamentos_vendidos:#recorre la matriz departamentos_vendidos
+    for e in listas:#ingresa a cada elemento de n lista
+      fileV.write(str(e)+",")#escribe en el archivo como str y agrega una ,
+    fileV.write("\n")#al terminar de escribir una lista en una linea, salta a la siguiente
+  fileV.close() #cierra el archivo
 
-def leer(departamentos,departamentos_vendidos):
-  n=open("archivo_registrados.txt","r")
-  lineas1 = n.readlines()
+def leer(departamentos,departamentos_vendidos): #leer los archivos
+  n=open("archivo_registrados.txt","r") #abre el archivo en modo lectura
+  lineas1 = n.readlines() #Retorna una lista de str de cada linea del archivo
 
   m=open("archivo_vendidos.txt","r")
   lineas2 = m.readlines()
 
-  for i in range(len(lineas1)):
-    depa = lineas1[i].split(",")[:-1]
-    if depa not in departamentos:
-      departamentos.append(depa)
-  n.close()
+  for i in range(len(lineas1)): #Itera segun la longitud de la cantidad de lineas
+    depa = lineas1[i].split(",")[:-1] #Retorna una lista de cada dato por linea y eliminas las comas
+    for k in range(len(depa)): #Itera la lista depa segun su longitud o cantidad 
+      if k == 2 or k == 3: #Cambia el formato de los datos a int
+        depa[k] = int(depa[k])
+      elif k == 4 or k == 5: #Cambia el formato de los datos a float
+        depa[k] = float(depa[k])
+      else:
+        depa[k] = str(depa[k])
+    if depa not in departamentos: #Verifica que el depa no se repita 
+      departamentos.append(depa) #Agrega la lista con los datos ya cambiados a la matriz
+      
+  n.close() #Cierra el archivo
   for i in range(len(lineas2)):
     depa = lineas2[i].split(",")[:-1]
-    if depa not in departamentos:
+    for k in range(len(depa)):
+      if k == 2 or k == 3:
+        depa[k] = int(depa[k])
+      elif k == 4 or k == 5:
+        depa[k] = float(depa[k])
+      else:
+        depa[k] = str(depa[k])
+    if depa not in departamentos_vendidos:
       departamentos_vendidos.append(depa)
   m.close()
 

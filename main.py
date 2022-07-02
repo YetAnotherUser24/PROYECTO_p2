@@ -4,7 +4,7 @@ import PrintingModule       #Módulo creado para imprimir menús
 import SearchandSortingModule
 import datetime
 def clear():        
-    os.system("cls")
+    os.system("clear")
 #Esta función limpia la consola mediante la libreria os
 
 def choice(opcion=-1):      #Esta función valida la entrada del usuario, se usa un -1 como defecto para entrar al bucle
@@ -75,10 +75,8 @@ while True:     #Permite correr al programa todo el tiempo hasta que el usuario 
                 print(d)
                 print("0. Regresar al menú principal")
                 opciones_validas = [0]
-                choice_value = choice()
-                if choice_value == 0:
-                    clear()
-                    break
+                choice()
+                break
             else:
                 opciones_validas = PrintingModule.menu_disponibilidad(d)
                 choice_value = choice_sin_limpieza()
@@ -86,7 +84,7 @@ while True:     #Permite correr al programa todo el tiempo hasta que el usuario 
                     clear()
                     break
                 elif choice_value == 1:
-                    opciones_validas = [x for x in range(0, len(departamentos)+1)]
+                    opciones_validas = [x for x in range(0, len(d)+1)]
                     print("""
 Seleccione el n° de serie del departamento que desea comprar
 0. Regresar al menú principal""")
@@ -94,10 +92,10 @@ Seleccione el n° de serie del departamento que desea comprar
                     choice_value = choice()
                     if choice_value == 0:       #Devuelve al menú principal
                         continue
-                    elif choice_value == 1:       #Activa el menú de compra
+                    else:       #Activa el menú de compra
                         while True:
-                            opciones_validas = PrintingModule.menu_compra(departamentos, choice_value)
-                            choice_value_sin_limpieza = choice_sin_limpieza()
+                            opciones_validas = PrintingModule.menu_compra(d, choice_value)
+                            choice_sin_limpieza()
                             confirmacion_value = confirmacion()
                             if confirmacion_value == "n":
                                 break
@@ -107,29 +105,29 @@ Seleccione el n° de serie del departamento que desea comprar
                                 choice()
                                 break
                         break
-                elif choice_value == 2:
+                elif choice_value == 2: #Filtrar por distrito
                     n = input("Distrito: ")
-                    d = SearchandSortingModule.busqueda_filtrar_distrito(n,d)
+                    d = SearchandSortingModule.busqueda_filtrar_distrito(n,d)#devuelve una matriz con los departamentos que estan en el distrito buscado
                     clear()
                     continue
-                elif choice_value == 3:
-                    n = input("n° de habitaciones: ")
-                    d = SearchandSortingModule.busqueda_filtrar_habitaciones(n,d)
+                elif choice_value == 3:#Filtrar por n° habitacion
+                    n = int(input("n° de habitaciones: "))
+                    d = SearchandSortingModule.busqueda_filtrar_habitaciones(n,d)#devuelve una matriz con los departamentos que tienen el n° de habitaciones buscado
                     clear()
                     continue
-                elif choice_value == 4:
-                    n = input("Número de pisos máximo: ")
-                    d = SearchandSortingModule.busqueda_filtrar_piso(n,d)
+                elif choice_value == 4: #Filtrar numero de pisos max
+                    n = int(input("Número de pisos máximo: "))
+                    d = SearchandSortingModule.busqueda_filtrar_piso(n,d)#devuelve una matriz con los departamentos que estan en el piso 1 hasta n piso
                     clear()
                     continue
-                elif choice_value == 5:
-                    n = input("Precio máximo: ")
-                    d = SearchandSortingModule.busqueda_filtrar_preciomax(n,d)
+                elif choice_value == 5:#Filtrar por precio maximo
+                    n = float(input("Precio máximo: "))
+                    d = SearchandSortingModule.busqueda_filtrar_preciomax(n,d)#devuelve una matriz con los departamentos que tienen un precio $0 hasta n precio
                     clear()
                     continue
-                elif choice_value == 6:
-                    n = input("Área mínima: ")
-                    d = SearchandSortingModule.busqueda_filtrar_area(n,d)
+                elif choice_value == 6:#Filtrar por area minima
+                    n = float(input("Área mínima: "))
+                    d = SearchandSortingModule.busqueda_filtrar_area(n,d)#devuelve una matriz con los departamentos que tienen un area n a mas 
                     clear()
                     continue
     #Activa el menú de departamentos disponibles          
@@ -140,13 +138,18 @@ Seleccione el n° de serie del departamento que desea comprar
             choice_value = choice()
             if choice_value == 0:
                 break
-            elif choice_value == 1:
-                SearchandSortingModule.ordenamiento_distrito(departamentos_vendidos)
+            elif choice_value == 1: #Ordenar por distrito
+                SearchandSortingModule.ordenamiento_distrito(departamentos_vendidos)#Ordena la matriz o tabla de depas vendidos por orden alfabetico
                 continue
-            elif choice_value == 2:
-                SearchandSortingModule.ordenamiento_fecha(departamentos_vendidos)
+            elif choice_value == 2: #Ordenar por fecha de compra
+                SearchandSortingModule.ordenamiento_fecha(departamentos_vendidos)#Ordena la matriz o tabla de depas vendidos por numero de fecha de manera descendente
                 continue
-    elif choice_value == 4:
+            elif choice_value == 3:
+                SearchandSortingModule.ordenamiento_precio(departamentos_vendidos)
+            elif choice_value == 4:
+                SearchandSortingModule.ordenamiento_area(departamentos_vendidos)
+    elif choice_value == 4: #Guarda las matrices departamentos y departamentos_vendidos en su archivo correspondiente
+        print("Recuerda leer el archivo antes de guardar :D")
         c = confirmacion()
         if c == "y":    
             PrintingModule.guardar(departamentos,departamentos_vendidos)
@@ -155,7 +158,7 @@ Seleccione el n° de serie del departamento que desea comprar
             continue
         elif c == "n":
             continue
-    elif choice_value == 5:
+    elif choice_value == 5: #Agregar los elementos de los archivos a cada matriz
         c = confirmacion()
         if c == "y":
             PrintingModule.leer(departamentos,departamentos_vendidos)
@@ -164,6 +167,6 @@ Seleccione el n° de serie del departamento que desea comprar
             continue
         elif c == "n":
             continue
-    elif choice_value == 0:     
+    elif choice_value == 6:     
         break
     #Termina el programa
